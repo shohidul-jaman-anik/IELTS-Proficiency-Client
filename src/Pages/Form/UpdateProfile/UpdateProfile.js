@@ -1,16 +1,14 @@
 import React from 'react';
-import { useAuthState } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
-import auth from '../../../firebase.init';
 import { toast } from 'react-toastify';
 
 
 const UpdateProfile = () => {
     const { register, formState: { errors }, handleSubmit, reset } = useForm();
-    const [user, loading] = useAuthState(auth);
+
     const onSubmit = async data => {
 
-        fetch(`http://localhost:5000/form/${data.email}`, {
+        fetch(`/${data.email}`, {
             method: "PUT",
             headers: {
                 "content-type": "application/json"
@@ -25,6 +23,7 @@ const UpdateProfile = () => {
             })
     }
 
+
     return (
         <div>
             <h1 className='text-center text-3xl'>Update Your Profile</h1>
@@ -36,7 +35,7 @@ const UpdateProfile = () => {
                         </label>
                         <input
                             type="text"
-                            defaultValue={user.displayName}
+                            // defaultValue={user.displayName}
                             placeholder="Enter Your Name"
                             className="input input-bordered input-primary w-full max-w-xs "
                             // {...register("firstName", { required: true })}
@@ -59,11 +58,10 @@ const UpdateProfile = () => {
                         </label>
                         <input
                             type="email"
-                            value={user?.email}
+                            // value={user?.email}
                             disabled
                             placeholder="Enter your e-mail"
                             className="input input-bordered input-primary w-full max-w-xs "
-                            // {...register("firstName", { required: true })}
                             {...register("email")}
                         />
                     </div>
@@ -89,7 +87,7 @@ const UpdateProfile = () => {
                         </label>
                     </div>
 
-                    <input type="submit" className='lg:ml-20 form-button ml-3' value="Update Profile" />
+                    <input type="submit" className='lg:ml-20 form-button !bg-slate-800 ml-3' value="Update Profile" />
                 </form>
             </div>
         </div>

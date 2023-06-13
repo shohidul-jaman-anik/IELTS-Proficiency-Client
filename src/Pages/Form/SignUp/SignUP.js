@@ -1,52 +1,20 @@
-import React, { useEffect } from 'react';
-import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
+import React from 'react';
 import { useForm } from 'react-hook-form';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import './Signup.css'
-import SignUpImg from '../../../Asset/form-illustrator/Sign in-pana.svg'
-import SocialLogin from '../SocialLogin/SocialLogin';
-import { toast } from 'react-toastify';
-import auth from '../../../firebase.init';
-import Loading from '../../Loading/Loading';
+import { Link } from 'react-router-dom';
+import SignUpImg from '../../../Asset/form-illustrator/Sign in-pana.svg';
+import './Signup.css';
+
 
 const SignUP = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
-    const [updateProfile, updating, updateError] = useUpdateProfile(auth);
-    let location = useLocation();
-    let from = location.state?.from?.pathname || "/";
-    const [
-        createUserWithEmailAndPassword,
-        user,
-        loading,
-        error,
-    ] = useCreateUserWithEmailAndPassword(auth);
-    let navigate = useNavigate();
 
 
-    useEffect(() => {
-        if (user) {
-            navigate(from, { replace: true });
-            toast.success('SignUp sucessfully')
-        }
-    }, [user, from, navigate])
 
-    // if (user) {
-    //     navigate('/')
-    // }
 
-    if (loading || updating) {
-        return <Loading></Loading>
-    }
-    let loginError;
-    if (error || updateError) {
-        loginError = <p className='text-red-500'>{error?.message || error?.updateError}</p>
-    }
+
     const onSubmit = async data => {
-        await createUserWithEmailAndPassword(data.email, data.password)
-        await updateProfile({ displayName: data.name });
-        console.log(data)
 
-        fetch(`http://localhost:5000/form`, {
+        fetch(``, {
             method: "POST",
             headers: {
                 "content-type": "application/json"
@@ -141,7 +109,7 @@ const SignUP = () => {
                         {errors.password?.type === 'minLength' && <span className="label-text-alt text-red-500">{errors.password.message}</span>}
 
                     </label>
-                    {loginError}
+
                 </div>
 
                 <input type="submit" className='lg:ml-20 form-button ml-3' value="SignUp" />
@@ -153,7 +121,7 @@ const SignUP = () => {
                     </Link></small>
                 </p>
 
-                <SocialLogin></SocialLogin>
+             
             </form>
 
         </div>

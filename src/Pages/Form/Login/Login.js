@@ -1,62 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { useSendPasswordResetEmail, useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
-import './Login.css'
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import SocialLogin from '../SocialLogin/SocialLogin';
-import './Login.css'
-import loginImg from '../../../Asset/form-illustrator/Sign in-pana.svg'
+import React from 'react';
 import { useForm } from 'react-hook-form';
-import Loading from '../../Loading/Loading';
-import auth from '../../../firebase.init';
+import { Link } from 'react-router-dom';
+import loginImg from '../../../Asset/form-illustrator/Sign in-pana.svg';
+import './Login.css';
 
 const Login = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
-    const [resetEmail, setResetEmail] = useState('')
-    const [sendPasswordResetEmail, sending, ResetError] = useSendPasswordResetEmail(
-        auth
-    );
 
-    const [
-        signInWithEmailAndPassword,
-        user,
-        loading,
-        error,
-    ] = useSignInWithEmailAndPassword(auth);
-    let navigate = useNavigate();
-    let location = useLocation();
-    let from = location.state?.from?.pathname || "/";
-
-    useEffect(() => {
-        if (user) {
-            navigate(from, { replace: true });
-            toast.success('Login sucessfully')
-        }
-    }, [user, from, navigate])
-
-    if (loading || sending) {
-        return <Loading></Loading>
-    }
-    let loginError;
-    if (error || ResetError) {
-        loginError = <p className='text-red-500'>{error?.message}</p>
-    }
     const onSubmit = (data) => {
-        setResetEmail(data.email)
-        signInWithEmailAndPassword(data.email, data.password)
+
 
     };
 
-    const handleResetPass = async user => {
-
-        if (resetEmail) {
-            await sendPasswordResetEmail(resetEmail);
-            toast('Sent email');
-        }
-        else {
-            toast('Please Enter Your Email')
-        }
-    }
     return (
         <div>
             <div className='loginContainer'>
@@ -119,20 +74,20 @@ const Login = () => {
                             {errors.password?.type === 'minLength' && <span className="label-text-alt text-red-500">{errors.password.message}</span>}
 
                         </label>
-                        {loginError}
+
                     </div>
 
                     <input type="submit" className='lg:ml-20 ml-3 form-button text-white ' value="Login" />
                     <p className='text-center mt-2'><small>
-                        New To IELTS Proficiency ?
+                        New To JS Encoder ?
                         <Link className='text-primary ml-2'
                             to='/SignUp'>Create New Account
                         </Link></small>
                     </p>
 
-                    <p className='text-center'>Forget Password ? <span onClick={handleResetPass}>Reset Password</span></p>
 
-                    <SocialLogin></SocialLogin>
+
+
                 </form>
 
             </div>

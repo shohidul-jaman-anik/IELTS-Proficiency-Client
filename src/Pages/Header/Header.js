@@ -40,11 +40,11 @@ const Header = () => {
 
                             <div class="flex space-x-4">
                                 <Link to='/'>
-                                    <h1 class="text-white text-2xl font-semibold" >IELTS Proficiency</h1>
+                                    <h1 class="text-white text-2xl font-semibold" >JS Encoder</h1>
                                 </Link>
                                 <Link to="/" class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium" aria-current="page">Home</Link>
 
-                                <Link to="/addApi" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Add Data</Link>
+                                <Link to="/addApi" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Add Task</Link>
                             </div>
                         </div>
                     </div>
